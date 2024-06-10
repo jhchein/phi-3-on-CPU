@@ -16,7 +16,19 @@ If you choose to build the Docker image yourself for greater control over the co
 
 You have two options to set up the Docker image:
 
-### Option A - Build the Image Locally
+### Option A - Pull from Docker Hub
+
+This option is faster and simpler, ideal if you want to get started quickly.
+
+The Docker image for the Phi-3-mini-4k-instruct model is available for public use under the repository `heinous/phi-3-on-cpu`. You can pull the image using the following Docker command:
+
+```bash
+docker pull heinous/phi-3-on-cpu:latest
+```
+
+This will download the latest version of the phi-3-on-cpu image to your local machine.
+
+### Option B - Build the Image Locally
 
 This option gives you more control over the model parameters and configuration.
 
@@ -49,18 +61,6 @@ docker build --build-arg HF_AUTH_TOKEN=your_hugging_face_token -t phi-3-on-cpu .
 ```
 
 Replace `your_hugging_face_token` with your actual Hugging Face authentication token.
-
-### Option B - Pull from Docker Hub
-
-This option is faster and simpler, ideal if you want to get started quickly.
-
-The Docker image for the Phi-3-mini-4k-instruct model is available for public use under the repository `heinous/phi-3-on-cpu`. You can pull the image using the following Docker command:
-
-```bash
-docker pull heinous/phi-3-on-cpu:latest
-```
-
-This will download the latest version of the phi-3-on-cpu image to your local machine.
 
 ### Run the Docker Container
 
