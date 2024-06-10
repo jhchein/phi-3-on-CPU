@@ -1,10 +1,10 @@
 # Phi-3 on CPU
 
-This project provide a small and simple Phi-3-mini-4k-instruct containizered, making it easy to build, deploy, and run anywhere.
+This project provides a small and simple containerized Phi-3 backend, making it easy to build, deploy, and run anywhere.
 
 ## Overview
 
-This FastAPI server provides a single-threaded(!) API endpoint to generate responses from the Phi-3-mini-4k-instruct model based on prompts sent to the server. It is designed to run inside a Docker container which encapsulates all its dependencies, ensuring a consistent environment for deployment.
+This FastAPI server provides a single-threaded API endpoint to generate responses from the Phi-3-mini-4k-instruct model based on prompts sent to the server. It is designed to run inside a Docker container which encapsulates all its dependencies, ensuring a consistent environment for deployment.
 
 ## Prerequisites
 
@@ -22,16 +22,16 @@ git clone https://github.com/yourusername/Phi-3-on-CPU.git
 cd Phi-3-on-CPU
 ```
 
-### 2. (optional) Tune the model parameters for your machine
+### 2. (Optional) Tune the Model Parameters for Your Machine
 
-In app.py adjust the following parameters
+In `app.py`, adjust the following parameters:
 
-```Python
+```python
 llm = Llama(
     model_path="./Phi-3-mini-4k-instruct-q4.gguf",
-    n_ctx=4096, # Max context length. Keep shorter for less resource consumption.
-    n_threads=8, # Tune to your CPU threads
-    n_gpu_layers=0,  # Number of layers to offload to GPU (-ngl). If -1, all layers are offloaded. Set to 0 if running on CPU.
+    n_ctx=4096,  # Max context length. Keep shorter for less resource consumption.
+    n_threads=8,  # Tune to your CPU threads
+    n_gpu_layers=0,  # Number of layers to offload to GPU. Set to 0 if running on CPU. Set to -1 for full GPU inference.
 )
 ```
 
@@ -93,7 +93,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"prompt":"How to explain t
 
 ## Acknowledgements
 
-- Microsoft Research for developing Phi-3 (https://www.microsoft.com/en-us/research/publication/phi-3-technical-report-a-highly-capable-language-model-locally-on-your-phone/)
-- [Hugging Face](https://huggingface.co) for providing the model and tools (see: https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
+- Microsoft Research for developing [Phi-3](https://www.microsoft.com/en-us/research/publication/phi-3-technical-report-a-highly-capable-language-model-locally-on-your-phone/)
+- [Hugging Face](https://huggingface.co) for providing the model and tools (see: [Phi-3 on Hugging Face](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct))
 - [FastAPI](https://fastapi.tiangolo.com/) for the web framework.
 - [Llama Library](https://github.com/yourusername/llama-cpp) for the model integration.
