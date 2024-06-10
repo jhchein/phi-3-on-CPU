@@ -37,4 +37,20 @@ async def predict(item: Item):
     output = llm(formatted_prompt, max_tokens=512, stop=["<|end|>"], echo=False)
     logging.info(f"Model output: {output}")
 
-    return {"response": output["choices"][0]["text"]}
+    # Extract usage and completion times
+    usage = output.get("usage", {})
+    prompt_tokens = usage.get("prompt_tokens", 0)
+    completion_tokens = usage.get("completion_tokens", 0)
+    total_tokens = usage.get("total_tokens", 0)
+
+    # Add timings to the response
+    response = {
+        "response": output["choices"][0]["text"],
+        "usage": {
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens,
+            "total_tokens": total_tokens,
+        },
+    }
+
+    return response

@@ -77,13 +77,19 @@ The request body should contain a JSON object with the `prompt` field:
 
 ### Response
 
-The response will be in JSON format, containing the generated text from the model:
+The response will be in JSON format, containing the generated text from the model and the usage details:
 
 ```json
 {
-  "response": "Generated text from the model..."
+  "response": "Generated text from the model...",
+  "usage": {
+    "prompt_tokens": 16,
+    "completion_tokens": 349,
+    "total_tokens": 365
+  }
 }
 ```
+This response includes the number of tokens used in the prompt (`prompt_tokens`), the number of tokens in the completion (`completion_tokens`), and the total number of tokens (`total_tokens`).
 
 ### Example Using `curl`
 
