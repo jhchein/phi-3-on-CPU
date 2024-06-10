@@ -35,8 +35,8 @@ This option gives you more control over the model parameters and configuration.
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Phi-3-on-CPU.git
-cd Phi-3-on-CPU
+git clone https://github.com/jhchein/phi-3-on-CPU.git
+cd phi-3-on-CPU
 ```
 
 #### 2. Tune the Model Parameters for Your Machine
