@@ -1,10 +1,10 @@
-# Phi-3-on-CPU Model Server
+# Phi-3 on CPU
 
-This project contains a FastAPI application that serves the Phi-3-mini-4k-instruct model using the Llama library. The application is containerized using Docker, making it easy to build, deploy, and run anywhere.
+This project provide a small and simple Phi-3-mini-4k-instruct containizered, making it easy to build, deploy, and run anywhere.
 
 ## Overview
 
-This FastAPI server provides an API endpoint to generate responses from the Phi-3-mini-4k-instruct model based on prompts sent to the server. It is designed to run inside a Docker container which encapsulates all its dependencies, ensuring a consistent environment for deployment.
+This FastAPI server provides a single-threaded(!) API endpoint to generate responses from the Phi-3-mini-4k-instruct model based on prompts sent to the server. It is designed to run inside a Docker container which encapsulates all its dependencies, ensuring a consistent environment for deployment.
 
 ## Prerequisites
 
@@ -22,7 +22,20 @@ git clone https://github.com/yourusername/Phi-3-on-CPU.git
 cd Phi-3-on-CPU
 ```
 
-### 2. Build the Docker Image
+### 2. (optional) Tune the model parameters for your machine
+
+In app.py adjust the following parameters
+
+```Python
+llm = Llama(
+    model_path="./Phi-3-mini-4k-instruct-q4.gguf",
+    n_ctx=4096, # Max context length. Keep shorter for less resource consumption.
+    n_threads=8, # Tune to your CPU threads
+    n_gpu_layers=0,  # Number of layers to offload to GPU (-ngl). If -1, all layers are offloaded. Set to 0 if running on CPU.
+)
+```
+
+### 3. Build the Docker Image
 
 To build the Docker image, navigate to the directory containing the Dockerfile and run the following command:
 
@@ -32,7 +45,7 @@ docker build --build-arg HF_AUTH_TOKEN=your_hugging_face_token -t phi-3-on-cpu .
 
 Replace `your_hugging_face_token` with your actual Hugging Face authentication token.
 
-### 3. Run the Docker Container
+### 4. Run the Docker Container
 
 Once the image is built, you can run the container using:
 
@@ -78,51 +91,9 @@ The response will be in JSON format, containing the generated text from the mode
 curl -X POST -H "Content-Type: application/json" -d '{"prompt":"How to explain the Internet to a medieval knight?"}' http://localhost:4000/predict
 ```
 
-## Development and Testing
-
-### Running Locally
-
-If you prefer to run the application locally without Docker, make sure you have Python 3.11 installed. Then follow these steps:
-
-1. **Install dependencies**:
-
-```bash
-pip install -r requirements.txt
-```
-
-2. **Run the FastAPI application**:
-
-```bash
-uvicorn app:app --host 0.0.0.0 --port 5000
-```
-
-### Testing the Endpoint
-
-You can use tools like Postman or `curl` to test the endpoint locally as described in the previous sections.
-
-## Logging
-
-The application uses Python's built-in `logging` module to log important information, such as received prompts and model outputs. This can be useful for monitoring and debugging purposes.
-
-## Security Considerations
-
-- **API Token**: Make sure to keep your Hugging Face API token secure. Do not hardcode it in your source files or expose it in public repositories.
-- **Docker Security**: Follow best practices for securing Docker containers, such as running the container with a non-root user and limiting the container's permissions.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Acknowledgements
 
-- [Hugging Face](https://huggingface.co) for providing the model and tools.
+- Microsoft Research for developing Phi-3 (https://www.microsoft.com/en-us/research/publication/phi-3-technical-report-a-highly-capable-language-model-locally-on-your-phone/)
+- [Hugging Face](https://huggingface.co) for providing the model and tools (see: https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
 - [FastAPI](https://fastapi.tiangolo.com/) for the web framework.
 - [Llama Library](https://github.com/yourusername/llama-cpp) for the model integration.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.
-
-## Contact
-
-For any questions or inquiries, please contact [yourname](mailto:youremail@example.com).
