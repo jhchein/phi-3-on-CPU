@@ -1,0 +1,5 @@
+fastapi
+pydantic
+uvicorn
+llama-cpp-python
+huggingface-hub>=0.17.1

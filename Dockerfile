@@ -10,8 +10,17 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
+# Copy the requirements.txt file into the Docker image
+COPY requirements.txt .
+
 # Install Python dependencies
-RUN pip install fastapi uvicorn huggingface-hub>=0.17.1 llama-cpp-python
+RUN pip install -r requirements.txt
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Switch CWD to /app
+WORKDIR /app
 
 # Environment variables
 ENV NAME World \
@@ -25,9 +34,6 @@ RUN huggingface-cli login --token $HF_AUTH_TOKEN
 
 # Download the Phi-3 model
 RUN huggingface-cli download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-q4.gguf --local-dir . --local-dir-use-symlinks False
-
-# Copy the current directory contents into the container at /app
-COPY . /app
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
