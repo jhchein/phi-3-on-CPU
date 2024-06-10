@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from fastapi import FastAPI
+from pydantic import BaseModel
 from llama_cpp import Llama
 import logging
 
-app = Flask(__name__)
+app = FastAPI()
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -16,22 +17,21 @@ llm = Llama(
 )
 
 
-@app.route("/predict", methods=["POST"])
-def predict():
-    data = request.get_json()
-    prompt = data.get("prompt")
+class Item(BaseModel):
+    prompt: str
+
+
+@app.post("/predict")
+async def predict(item: Item):
+    prompt = item.prompt
     if not prompt:
         logging.info("No prompt provided")
-        return jsonify({"error": "No prompt provided"}), 400
+        return {"error": "No prompt provided"}
 
     logging.info(f"Received prompt: {prompt}")
 
     # Run the model
-    output = llm(f"\n{prompt}\n", max_tokens=256, stop=[""], echo=False)
+    output = llm(f"\n{prompt}\n", max_tokens=256, stop=["<|end|>"], echo=False)
     logging.info(f"Model output: {output}")
 
-    return jsonify({"response": output["choices"][0]["text"]}), 200
-
-
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    return {"response": output["choices"][0]["text"]}
