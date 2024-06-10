@@ -28,10 +28,13 @@ async def predict(item: Item):
         logging.info("No prompt provided")
         return {"error": "No prompt provided"}
 
-    logging.info(f"Received prompt: {prompt}")
+    # Format the prompt according to the model schema
+    formatted_prompt = f"<|user|>\n{prompt}\n<|end|>\n<|assistant|>"
+
+    logging.info(f"Received prompt: {formatted_prompt}")
 
     # Run the model
-    output = llm(f"\n{prompt}\n", max_tokens=256, stop=["<|end|>"], echo=False)
+    output = llm(formatted_prompt, max_tokens=512, stop=["<|end|>"], echo=False)
     logging.info(f"Model output: {output}")
 
     return {"response": output["choices"][0]["text"]}
