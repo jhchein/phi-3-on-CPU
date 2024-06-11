@@ -20,7 +20,7 @@ You have two options to set up the Docker image:
 
 This option is faster and simpler, ideal if you want to get started quickly.
 
-The Docker image for the Phi-3-mini-4k-instruct model is available for public use under the repository `heinous/phi-3-on-cpu`. You can pull the image using the following Docker command:
+The Docker image (2.53 GB) for the Phi-3-mini-4k-instruct model is available for public use under the repository `heinous/phi-3-on-cpu`. You can pull the image using the following Docker command:
 
 ```bash
 docker pull heinous/phi-3-on-cpu:latest
