@@ -4,7 +4,7 @@ This project provides a small and simple containerized and [quantized Phi-3](htt
 
 ## Overview
 
-This FastAPI server provides a single-threaded API endpoint to generate responses from the Phi-3-mini-4k-instruct model based on prompts sent to the server. It is designed to run inside a Docker container which encapsulates all its dependencies, ensuring a consistent environment for deployment.
+This FastAPI server provides a single-threaded API endpoint to generate responses from the Phi-3-mini-4k-instruct model. It's a bare minimum deployment (one thread, no message context, no streaming), but any customizations to the API can be easily made in `app.py`.
 
 ## Prerequisites
 
