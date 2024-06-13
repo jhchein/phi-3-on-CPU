@@ -6,6 +6,16 @@ This project provides a small and simple containerized and [quantized Phi-3](htt
 
 This FastAPI server provides a single-threaded API endpoint to generate responses from the Phi-3-mini-4k-instruct model. It's a bare minimum deployment (one thread, no message context, no streaming), but any customizations to the API can be easily made in `app.py`.
 
+## tl;dr
+
+All that is needed to know for the impatient.
+
+```bash
+docker pull heinous/phi-3-on-cpu:latest
+docker run -p 4000:5000 phi-3-on-cpu
+curl -X POST -H "Content-Type: application/json" -d '{"prompt":"How to explain the Internet to a medieval knight?"}' http://localhost:4000/predict
+```
+
 ## Prerequisites
 
 Before you run the Docker container, you need to have Docker installed on your machine. 
